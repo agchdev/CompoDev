@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+.preserve-3d {
+  @apply transform;
+  transform-style: preserve-3d;
+}
+
+.face {
+  @apply absolute w-full h-full flex items-center justify-center;
+  backface-visibility: hidden;
+}
