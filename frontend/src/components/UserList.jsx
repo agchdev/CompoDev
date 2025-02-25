@@ -14,7 +14,7 @@ const UserList = () => {
           setError(data.message);
         }
       })
-      .catch(() => setError("Error al conectar con el servidor"));
+      .catch(() => setError("Error"));
   }, []);
 
   return (
