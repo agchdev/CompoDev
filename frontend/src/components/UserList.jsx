@@ -5,16 +5,20 @@ const UserList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost/backend/showUsers.php")
+    fetch("http://localhost/CompoDev/backend/showUsers.php")
       .then((response) => response.json())
       .then((data) => {
+        console.log("Respuesta del servidor:", data); // Ver en consola
         if (data.status === "success") {
           setUsers(data.users);
         } else {
           setError(data.message);
         }
       })
-      .catch(() => setError("Error"));
+      .catch(error => {
+        console.error("Error en la solicitud:", error);
+        setError("Error al conectar con el servidor");
+      });
   }, []);
 
   return (
@@ -26,7 +30,7 @@ const UserList = () => {
         <ul>
           {users.map((user) => (
             <li key={user.id}>
-              <strong>{user.username}</strong> - {user.email}
+              <strong>{user.usuario}</strong> 
             </li>
           ))}
         </ul>

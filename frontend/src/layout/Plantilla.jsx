@@ -4,13 +4,16 @@ import { Outlet } from 'react-router-dom'
 import Footer from '../components/Footer'
 
 const Plantilla = () => {
+
   return (
     <>
+    
     <Header />
-    <main>
-      <Outlet />
-    </main>
+      <main className='bg-black w-full h-screen'>
+        <Outlet />
+      </main>
     <Footer />
+    
     </>
   )
 }

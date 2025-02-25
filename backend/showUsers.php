@@ -1,7 +1,10 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
-require_once("db.php");
+
+require_once(__DIR__ . "/class.db.php");
 
 class Users {
     private $conn;
@@ -12,28 +15,29 @@ class Users {
     }
 
     public function getAllUsers() {
-        $sql = "SELECT id, usuario FROM usuarios"; // Ajusta los nombres según tu base de datos
-        $result = $this->conn->query($sql); // No se necesita prepare() porque no hay parámetros
+        $sql = "SELECT id, usuario FROM usuarios";
+        $result = $this->conn->query($sql);
 
         $users = [];
 
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) { // Usamos fetch_assoc() para arrays asociativos
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
                 $users[] = [
                     "id" => $row["id"],
                     "usuario" => $row["usuario"]
                 ];
             }
-            return json_encode(["status" => "success", "users" => $users]);
+            echo json_encode(["status" => "success", "users" => $users], JSON_UNESCAPED_UNICODE);
         } else {
-            return json_encode(["status" => "error", "message" => "No se encontraron usuarios"]);
+            echo json_encode(["status" => "error", "message" => "No se encontraron usuarios"], JSON_UNESCAPED_UNICODE);
         }
+        exit;
     }
 }
 
-// Si se accede directamente a este archivo, devolver los usuarios
-if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    $users = new Users();
-    echo $users->getAllUsers();
-}
+// Evitar salida duplicada
+if (ob_get_length()) ob_clean();
+
+$users = new Users();
+$users->getAllUsers();
 ?>

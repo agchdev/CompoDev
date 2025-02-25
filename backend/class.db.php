@@ -3,10 +3,9 @@ class DB {
     private $conn;
 
     public function __construct() {
-        // require_once('../../../cred.php');
+        require_once('../../../cred.php');
 
-        $this->conn = new mysqli("localhost", "root", "", "agenda2");
-
+        $this->conn = new mysqli("localhost", USU_CONN, PSW_CONN, "compoDev");
 
         // Manejo de errores en la conexión
         if ($this->conn->connect_error) {
@@ -22,15 +21,15 @@ class DB {
     // Método para probar la conexión correctamente
     public function testConnection() {
         if ($this->conn->connect_error) {
-            return json_encode(["status" => "error", "message" => "Error de conexión: " . $this->conn->connect_error]);
+            return ["status" => "error", "message" => "Error de conexión: " . $this->conn->connect_error];
         }
-        return json_encode(["status" => "success", "message" => "Conexión a la base de datos establecida."]);
+        return ["status" => "success", "message" => "Conexión a la base de datos establecida."];
     }
 }
 
 // Prueba de conexión (solo si se accede directamente a este archivo)
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $db = new DB();
-    echo $db->testConnection();
+    echo json_encode($db->testConnection(), JSON_UNESCAPED_UNICODE);
 }
 ?>
