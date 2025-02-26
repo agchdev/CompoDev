@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
 @import "tailwindcss";
 
 .preserve-3d {
@@ -8,4 +9,8 @@
 .face {
   @apply absolute w-full h-full flex items-center justify-center;
   backface-visibility: hidden;
+}
+
+@theme {
+  --font-roboto: "Poppins", sans-serif; 
 }
