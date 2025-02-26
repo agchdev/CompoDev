@@ -2,7 +2,7 @@ html, body {
     font-family: 'Dongle', sans-serif;
     margin: 0;
     padding: 0;
-    color: rgb(44, 44, 255);
+    /* color: rgb(44, 44, 255);
     color: rgb(221, 74, 255);
     color: rgb(100, 220, 255);
     color: rgb(200, 50, 50);
@@ -15,7 +15,7 @@ html, body {
     color: rgb(168, 27, 27);
 
     
-    color: rgb(36, 27, 168);    
+    color: rgb(36, 27, 168);     */
   }
   
   :root {
