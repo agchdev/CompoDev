@@ -1,57 +1,79 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios"
-import UserList from "../components/UserList";
+import Bubble from "../components/Bubble";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
-  const [mensaje, setMensaje] = useState("");
+  const [ojo, setOjo] = useState(false);
+
+  const navigate = useNavigate()
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setMensaje(""); // Limpiar mensaje previo
 
     try {
-      const response = await axios.post("http://localhost/CompoDev/backend/login.php", {
-        usuario,
-        password,
-      });
+      const response = await axios.post(
+        'http://localhost/CompoDev/backend/login.php',
+        { usuario, password },
+        { withCredentials: true } // Aquí está el detalle
+      )
 
       console.log("Respuesta del servidor:", response.data);
       if (response.data.status === "success") {
-        setMensaje("✅ Login exitoso");
-        localStorage.setItem("usuario", usuario); // Guardar sesión (temporal)
-      } else {
-        setMensaje("❌ " + response.data.message);
+        navigate("/")
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
-      setMensaje("❌ Error al conectar con el servidor");
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form className="flex flex-col items-center justify-center" onSubmit={handleLogin}>
-        <input
-          className="border"
-          type="text"
-          placeholder="Usuario"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
-        />
-        <input
-          className="border"
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Iniciar Sesión</button>
-      </form>
-      {mensaje && <p style={{ color: mensaje.includes("✅") ? "green" : "red" }}>{mensaje}</p>}
-    </div>
+    <div className='w-full h-screen text-white flex flex-col items-center justify-center text-center'>
+        <div className='shadow-xl hover:shadow-md transition-shadow shadow-black/50 absolute z-10 rounded-4xl overflow-hidden'>
+            <form
+              className=' p-10 backdrop-blur-3xl flex flex-col justify-center items-center gap-3'
+              onSubmit={handleLogin}
+              method="post"
+            >
+              {/* <label>Usuario:</label> */}
+              <input
+                className='text-white px-3 py-2 bg-black/20 rounded-3xl w-full  '
+                type="text"
+                placeholder='Usuario..'
+                value={usuario}
+                onChange={(e) => setUsuario(e.target.value)}
+              />
+              {/* <label>Contraseña:</label> */}
+              <div className='flex'>
+                <input
+                  className='text-white px-3 py-2 bg-black/20 rounded-l-3xl'
+                  type={!ojo ? "password" : "text"}
+                  placeholder='Contraseña..'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button 
+                  className='text-white px-3 py-2 bg-white/20 rounded-r-3xl'
+                  onClick={(e) => {
+                    setOjo(!ojo)
+                    e.preventDefault()
+                  }}
+                >
+                  <img src={!ojo ? "./public/uploads/closeEye.svg" : "./public/uploads/openeye.svg"} width="20px" />
+                </button>
+              </div>
+              <input
+                className='cursor-pointer px-3 py-2 font-bold text-gray-900 rounded-full bg-white/80'
+                type="submit"
+                value="Iniciar Sesión"
+              />
+            <p>No tienes cuenta, <Link className="font-bold border-b-1" to="/register">Registrarse</Link></p>
+            </form>
+        </div>
+        <Bubble />
+      </div>
   );
 };
 

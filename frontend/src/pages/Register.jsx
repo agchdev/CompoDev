@@ -1,8 +1,7 @@
-import React, { use, useState } from 'react'
-import { useRef } from 'react';
-import Home from './Home';
+import { useState } from 'react'
 import Bubble from '../components/Bubble';
 import axios from "axios"
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
@@ -12,15 +11,12 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [urlFoto, setUrlFoto] = useState("");
   const [urlFotoPhp, setUrlFotoPhp] = useState(null);
-  const [error, setError] = useState(true);
   const [ojo, setOjo] = useState(false);
-  const [mensaje, setMensaje] = useState("")
 
-  const div = useRef(null);
+  // Hook para navegación
+  const navigate = useNavigate();
 
   const handleFotoSeleccionada = (event) => {
-    
-  console.log(div.current)
     const file = event.target.files[0] // Obtiene el archivo seleccionado
     if (file) {
       setUrlFoto(URL.createObjectURL(file)) // Genera una URL temporal para previsualizar la imagen
@@ -33,7 +29,6 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setMensaje(""); // Limpiar mensaje previo
 
     const formData = new FormData();
     formData.append("usuario", usuario);
@@ -54,27 +49,21 @@ const Register = () => {
 
       console.log("Respuesta del servidor:", response.data);
       if (response.data.status === "success") {
-        setMensaje("✅ Login exitoso");
-        sessionStorage.setItem("usuario", usuario); // Guardar sesión (temporal)
-      } else {
-        setError(false)
+        navigate("/login");
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
-      setError(false)
     }
   };
 
   return (
     <section>
-      <div ref={div} className='w-full h-screen text-white flex items-center justify-center text-center'>
-        {error ?
-          <div className='shadow-xl hover:shadow-md transition-shadow shadow-black/50 absolute z-10 rounded-4xl box- overflow-hidden'>
+      <div className='w-full h-screen text-white flex flex-col items-center justify-center text-center'>
+        <div className='shadow-xl hover:shadow-md transition-shadow shadow-black/50 absolute z-10 rounded-4xl overflow-hidden'>
             <form
-              className=' p-10 backdrop-blur-3xl flex flex-col justify-center items-center gap-1.5 gap-3'
+              className=' p-10 backdrop-blur-3xl flex flex-col justify-center items-center gap-3'
               onSubmit={handleRegister}
-               method="post"
-               enctype="multipart/form-data"
+              method="post"
             >
               <img
                 src={urlFoto || "/uploads/deafult.jpg"}
@@ -114,7 +103,7 @@ const Register = () => {
               <div className='flex'>
                 <input
                   className='text-white px-3 py-2 bg-black/20 rounded-l-3xl'
-                  type={ojo ? "password" : "text"}
+                  type={!ojo ? "password" : "text"}
                   placeholder='Contraseña..'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -126,16 +115,17 @@ const Register = () => {
                     e.preventDefault()
                   }}
                 >
-                  <img src={ojo ? "./public/uploads/closeEye.svg" : "./public/uploads/openeye.svg"} width="20px" />
+                  <img src={!ojo ? "./public/uploads/closeEye.svg" : "./public/uploads/openeye.svg"} width="20px" />
                 </button>
               </div>
               <input
-                className='cursor-pointer px-3 py-2 font-bold'
+                className='cursor-pointer px-3 py-2 font-bold text-gray-900 rounded-full bg-white/80'
                 type="submit"
+                value="Registrarse"
               />
+              <p>Tienes cuenta, <Link className="font-bold border-b-1" to="/login">Iniciar Sesión</Link></p>
             </form>
-          </div> : <Home />}
-
+        </div>
         <Bubble />
       </div>
     </section>

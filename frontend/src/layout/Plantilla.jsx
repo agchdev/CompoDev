@@ -1,19 +1,23 @@
-import React from 'react'
+
 import Header from '../components/Header'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Footer from '../components/Footer'
 
-const Plantilla = () => {
+const Plantilla = ({logeado}) => {
+
+  // El hook useLocation te dice en qué ruta estás
+  const location = useLocation();
+
+  // Rutas en las que NO quieres mostrar el Header ni el Footer
+  const noMostrar = ['/login', '/register'];
 
   return (
     <>
-    
-    <Header />
+    {noMostrar.includes(location.pathname) ? null : <Header />}
       <main className='bg-black w-full h-screen'>
-        <Outlet />
+        <Outlet logeado={logeado}/>
       </main>
-    <Footer />
-    
+    {noMostrar.includes(location.pathname) ? null : <Footer />}
     </>
   )
 }

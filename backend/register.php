@@ -17,14 +17,12 @@ $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
 $urlFoto = $_FILES["urlFotoPhp"]['tmp_name'];
 $format = explode(".", $_FILES["urlFotoPhp"]["name"]);
 
-print_r($_POST);
-
 $ruta = "./uploads/";
 // Manejo de subida de imagen
 if (!empty($urlFoto)) {
     if(!file_exists($ruta)) mkdir($ruta);
 
-    $destino = $ruta.$usuario.".".$format[1];
+    $destino = "./uploads/".$usuario.".".$format[1];
     
     if (move_uploaded_file($urlFoto, $destino)) {
         $urlFoto = $destino;
