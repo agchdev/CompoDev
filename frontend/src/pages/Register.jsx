@@ -1,35 +1,56 @@
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
+import { useRef } from 'react';
 import Home from './Home';
 import Bubble from '../components/Bubble';
+import axios from "axios"
 
 const Register = () => {
+
+  //USE STATE
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [urlFoto, setUrlFoto] = useState("");
+  const [urlFotoPhp, setUrlFotoPhp] = useState(null);
   const [error, setError] = useState(true);
-  let ruta = "";
+  const [ojo, setOjo] = useState(false);
+  const [mensaje, setMensaje] = useState("")
+
+  const div = useRef(null);
 
   const handleFotoSeleccionada = (event) => {
-    const file = event.target.files[0]; // Obtiene el archivo seleccionado
+    
+  console.log(div.current)
+    const file = event.target.files[0] // Obtiene el archivo seleccionado
     if (file) {
-      setUrlFoto(URL.createObjectURL(file)); // Genera una URL temporal para previsualizar la imagen
+      setUrlFoto(URL.createObjectURL(file)) // Genera una URL temporal para previsualizar la imagen
+      console.log(urlFoto)
     }
+    setUrlFotoPhp(file)
+    console.log(file)
   };
+
 
   const handleRegister = async (e) => {
     e.preventDefault();
     setMensaje(""); // Limpiar mensaje previo
 
+    const formData = new FormData();
+    formData.append("usuario", usuario);
+    formData.append("password", password);
+    formData.append("email", email);
+    formData.append("urlFotoPhp", urlFotoPhp); // La imagen se envía correctamente
+
     try {
-      const response = await axios.post("http://localhost/CompoDev/backend/register.php", {
-        usuario,
-        password,
-        email,
-        urlFoto,
-      });
-
-
+      const response = await axios.post(
+        "http://localhost/CompoDev/backend/register.php",
+        formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }
+      );
 
       console.log("Respuesta del servidor:", response.data);
       if (response.data.status === "success") {
@@ -46,20 +67,22 @@ const Register = () => {
 
   return (
     <section>
-      <div className='w-full h-screen text-white flex items-center justify-center text-center'>
+      <div ref={div} className='w-full h-screen text-white flex items-center justify-center text-center'>
         {error ?
-          <div className='absolute z-10 rounded-4xl border overflow-hidden'>
+          <div className='shadow-xl hover:shadow-md transition-shadow shadow-black/50 absolute z-10 rounded-4xl box- overflow-hidden'>
             <form
-              className=' p-10 backdrop-blur-3xl flex flex-col justify-center items-center gap-1.5'
+              className=' p-10 backdrop-blur-3xl flex flex-col justify-center items-center gap-1.5 gap-3'
               onSubmit={handleRegister}
+               method="post"
+               enctype="multipart/form-data"
             >
               <img
-                src={urlFoto || "/uploads/default.jpg"}
+                src={urlFoto || "/uploads/deafult.jpg"}
                 alt="foto"
-                className="w-50 h-50 rounded-3xl mb-4 object-cover border"
+                className="w-50 h-50 rounded-3xl mb-4 object-cover"
               />
               <input
-                className='hidden  py-2 px-4 rounded-2xl '
+                className='hidden py-2 px-4 rounded-2xl '
                 type="file"
                 accept="image/*"
                 id='fileInput'
@@ -71,23 +94,45 @@ const Register = () => {
               >
                 Seleccionar Foto
               </label>
-              <label>Usuario:</label>
+              {/* <label>Usuario:</label> */}
               <input
-                className='text-white border'
+                className='text-white px-3 py-2 bg-black/20 rounded-3xl w-full  '
                 type="text"
                 placeholder='Usuario..'
                 value={usuario}
                 onChange={(e) => setUsuario(e.target.value)}
               />
-              <label>Email:</label>
+              {/* <label>Email:</label> */}
               <input
+                className='text-white px-3 py-2 bg-black/20 rounded-3xl w-full'
                 type="email"
                 placeholder='Email..'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <label>Contraseña:</label>
-              
+              {/* <label>Contraseña:</label> */}
+              <div className='flex'>
+                <input
+                  className='text-white px-3 py-2 bg-black/20 rounded-l-3xl'
+                  type={ojo ? "password" : "text"}
+                  placeholder='Contraseña..'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button 
+                  className='text-white px-3 py-2 bg-white/20 rounded-r-3xl'
+                  onClick={(e) => {
+                    setOjo(!ojo)
+                    e.preventDefault()
+                  }}
+                >
+                  <img src={ojo ? "./public/uploads/closeEye.svg" : "./public/uploads/openeye.svg"} width="20px" />
+                </button>
+              </div>
+              <input
+                className='cursor-pointer px-3 py-2 font-bold'
+                type="submit"
+              />
             </form>
           </div> : <Home />}
 

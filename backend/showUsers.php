@@ -15,7 +15,7 @@ class Users {
     }
 
     public function getAllUsers() {
-        $sql = "SELECT id, usuario FROM usuarios";
+        $sql = "SELECT id, user FROM usuarios";
         $result = $this->conn->query($sql);
 
         $users = [];
@@ -24,7 +24,7 @@ class Users {
             while ($row = $result->fetch_assoc()) {
                 $users[] = [
                     "id" => $row["id"],
-                    "usuario" => $row["usuario"]
+                    "user" => $row["user"]
                 ];
             }
             echo json_encode(["status" => "success", "users" => $users], JSON_UNESCAPED_UNICODE);
