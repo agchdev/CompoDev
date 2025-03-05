@@ -44,7 +44,7 @@ const Nav = ({res}) => {
           <Link to="/componentes">Componentes</Link>
           <Link to="/contacto">Contacto</Link>
           <Link to="/comunidad">Comunidad</Link>
-          <Link to="/ide">Crear</Link>
+          <Link to="/crearProyecto">Crear</Link>
           <Link to="/suscripciones">Suscripción</Link>
         </nav>
         {

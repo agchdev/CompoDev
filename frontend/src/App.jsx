@@ -5,6 +5,7 @@ import Login from './pages/login';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Ide from './pages/Ide';
+import CrearProyecto from './components/ide/CrearProyecto';
 
 
 
@@ -21,6 +22,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/ide' element={<Ide />} />
+            <Route path='/crearProyecto' element={<CrearProyecto />} />
           </Route>
         </Routes>
       </BrowserRouter>
