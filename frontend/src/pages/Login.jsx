@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios"
 import Bubble from "../components/Bubble";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,7 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
+  const [msg, setMsg] = useState("");
   const [ojo, setOjo] = useState(false);
+  const [fail, setFail] = useState(false);
 
   const navigate = useNavigate()
 
@@ -23,6 +25,9 @@ const Login = () => {
       console.log("Respuesta del servidor:", response.data);
       if (response.data.status === "success") {
         navigate("/")
+      }else{
+        setMsg(response.data.message)
+        setFail(!fail);
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -32,11 +37,13 @@ const Login = () => {
   return (
     <div className='w-full h-screen text-white flex flex-col items-center justify-center text-center'>
         <div className='shadow-xl hover:shadow-md transition-shadow shadow-black/50 absolute z-10 rounded-4xl overflow-hidden'>
+            
             <form
               className=' p-10 backdrop-blur-3xl flex flex-col justify-center items-center gap-3'
               onSubmit={handleLogin}
               method="post"
             >
+              {fail ? <p className="font-bold">{msg}</p> : null}
               {/* <label>Usuario:</label> */}
               <input
                 className='text-white px-3 py-2 bg-black/20 rounded-3xl w-full  '

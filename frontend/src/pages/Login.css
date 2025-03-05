@@ -1,0 +1,8 @@
+@keyframe failerror{
+    0%{
+        background-color: red;
+    }
+    100%{
+        background-color: rgba(127, 255, 212, 0);
+    }
+}

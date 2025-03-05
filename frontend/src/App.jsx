@@ -4,6 +4,7 @@ import Plantilla from './layout/Plantilla';
 import Login from './pages/login';
 import Home from './pages/Home';
 import Register from './pages/Register';
+import Ide from './pages/Ide';
 
 
 
@@ -19,6 +20,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path='/ide' element={<Ide />} />
           </Route>
         </Routes>
       </BrowserRouter>

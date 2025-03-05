@@ -1,7 +1,7 @@
 
-import Header from '../components/Header'
+import Header from '../components/layout/Header'
 import { Outlet, useLocation } from 'react-router-dom'
-import Footer from '../components/Footer'
+import Footer from '../components/layout/Footer'
 
 const Plantilla = ({logeado}) => {
 
@@ -9,7 +9,7 @@ const Plantilla = ({logeado}) => {
   const location = useLocation();
 
   // Rutas en las que NO quieres mostrar el Header ni el Footer
-  const noMostrar = ['/login', '/register'];
+  const noMostrar = ['/login', '/register', '/ide'];
 
   return (
     <>
