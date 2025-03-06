@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const InicioRegLog = ({ res }) => {
     const [logeado, setLogeado] = useState(false)
@@ -22,6 +23,7 @@ const InicioRegLog = ({ res }) => {
         }
     }, [res])
 
+    // CODIGO PARA CERRAR SESION
     const logOut = async () => {
         try {
             const response = await axios.post(
@@ -39,7 +41,7 @@ const InicioRegLog = ({ res }) => {
             console.error("Error en la solicitud:", error);
         }
     }
-
+    // FIN CODIGO PARA CERRAR SESION
     if (mostrar[0] != location.pathname) {
         return (null)
     }
@@ -57,6 +59,7 @@ const InicioRegLog = ({ res }) => {
                                 <img className='w-full h-full object-cover' src={urlFoto} alt="" />
                             </div>
                         </div>
+                        {/* BOTON DE CERRAR SESION */}
                         <button className='text-white cursor-pointer' onClick={logOut}>Cerrar Sesion</button>
                     </nav>
                 }

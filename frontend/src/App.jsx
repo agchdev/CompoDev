@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Ide from './pages/Ide';
 import CrearProyecto from './components/ide/CrearProyecto';
 import Buscador from './components/Buscador';
+import Perfil from './pages/Perfil';
 
 
 
@@ -25,6 +26,7 @@ function App() {
             <Route path='/ide' element={<Ide />} />
             <Route path='/crearProyecto' element={<CrearProyecto />} />
             <Route path='/search' element={<Buscador />} />
+            <Route path='/profile' element={<Perfil />} />
           </Route>
         </Routes>
       </BrowserRouter>

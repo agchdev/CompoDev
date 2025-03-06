@@ -34,7 +34,7 @@ const Header = () => {
   }, [navigate]);
 
   return (
-    <header className='absolute w-full m-auto flex flex-col lg:flex-row items-center justify-between px-4 pt-8 pb-[100px] z-100 bg-gradient-to-b from-zinc-900 to-slate-900/0 '>
+    <header className='absolute w-full m-auto flex flex-col lg:flex-row items-center justify-between pt-8 pb-[100px] z-100 bg-gradient-to-b from-black/90 to-slate-900/0 '>
       <div className='absolute w-full m-auto top-10 flex lg:hidden items-center justify-center font-bold text-white text-5xl font-roboto transition-all'>
         <p className='mb-[5px]'>compoDev</p>
       </div>
