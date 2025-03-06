@@ -91,10 +91,6 @@ export default function ScrambleTextReact() {
 
   return (
     <div className="flex items-center justify-center ">
-      {/* 
-        El div donde se inyectará el texto scramble.
-        Texto principal en color blanco, ligero y tamaño 2xl 
-      */}
       <div ref={textRef} className="text-white font-bold text-9xl mt-3">Hola, me llamo Alejandro</div>
     </div>
   );
