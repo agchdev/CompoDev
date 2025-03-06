@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-03-2025 a las 14:03:14
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 05-03-2025 a las 19:31:10
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,13 +29,33 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `proyectos` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nombre` varchar(30) NOT NULL,
+  `titulo` varchar(30) NOT NULL,
   `html` longtext NOT NULL,
   `css` longtext NOT NULL,
   `js` longtext NOT NULL,
   `descripcion` varchar(500) NOT NULL,
-  `categoria` varchar(30) NOT NULL
+  `categoria` varchar(30) NOT NULL,
+  `likes` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `proyectos`
+--
+
+INSERT INTO `proyectos` (`id`, `titulo`, `html`, `css`, `js`, `descripcion`, `categoria`, `likes`) VALUES
+(13, 'holaPepe', '', '', '', 'Mi Primero proyecto', 'Botones', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proyectos_guardados`
+--
+
+CREATE TABLE `proyectos_guardados` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_proyecto` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -49,6 +69,13 @@ CREATE TABLE `proyectos_usuarios` (
   `id_usuario` int(11) NOT NULL,
   `rol` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `proyectos_usuarios`
+--
+
+INSERT INTO `proyectos_usuarios` (`id`, `id_proyecto`, `id_usuario`, `rol`) VALUES
+(12, 13, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -74,7 +101,8 @@ INSERT INTO `usuarios` (`id`, `user`, `email`, `password`, `urlFoto`) VALUES
 (3, 'pablo', 'pablo@pablo.com', '$2y$10$GBd9siKt8qk5Rmzyj3IWKewJATpikNWpi97lrI/YMh/I/1e2b3kly', './uploads/pablo.jpg'),
 (4, 'aa', 'aa@aa', '$2y$10$Z5NmY5oQVA.4Aik8YcPT7e0mYPVg.mciZutMgtkRtY5NpZI680bx2', './uploads/aa.jpg'),
 (5, 'ew', 'ew@ew', '$2y$10$OSlIKIvh9CCiAjYuBZK4aOpGuVZNa5QXVHLbkunUZlrrLP0ZBQsnO', './uploads/ew.jpg'),
-(6, 'nasa', 'nasa@nasa.com', '$2y$10$/ICzHeum6A0UrkMdgy08YONaGNTSGlLjaeYX/r9QmDPDc9yzwar2G', './uploads/nasa.jpg');
+(6, 'nasa', 'nasa@nasa.com', '$2y$10$/ICzHeum6A0UrkMdgy08YONaGNTSGlLjaeYX/r9QmDPDc9yzwar2G', './uploads/nasa.jpg'),
+(7, 'andres', 'andres@andres.com', '$2y$10$G.oCPNEOSq1CbeUNAwd2nuBxveRc/fYGYR023275WEacORhKT0i0.', './uploads/andres.jpg');
 
 --
 -- Índices para tablas volcadas
@@ -84,6 +112,13 @@ INSERT INTO `usuarios` (`id`, `user`, `email`, `password`, `urlFoto`) VALUES
 -- Indices de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indices de la tabla `proyectos_guardados`
+--
+ALTER TABLE `proyectos_guardados`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id` (`id`);
 
@@ -109,19 +144,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT de la tabla `proyectos_guardados`
+--
+ALTER TABLE `proyectos_guardados`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_usuarios`
 --
 ALTER TABLE `proyectos_usuarios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

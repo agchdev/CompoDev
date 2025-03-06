@@ -32,7 +32,9 @@ if($result && $result->num_rows > 0){
             "id" => $row["id"],
             "user" => $row["user"],
             "email" => $row["email"],
-            "urlFoto" => $row["urlFoto"]
+            "urlFoto" => $row["urlFoto"],
+            "descripcion" => $row["descripcion"],
+            "verificado" => $row["verificado"]
         ];
     }
 }

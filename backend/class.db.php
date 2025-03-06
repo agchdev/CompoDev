@@ -3,9 +3,9 @@ class DB {
     private $conn;
 
     public function __construct() {
-        require_once('../../../cred.php');
+        // require_once('../../../cred.php');
 
-        $this->conn = new mysqli("localhost", USU_CONN, PSW_CONN, "compoDev");
+        $this->conn = new mysqli("localhost", "root", "", "compodev");
 
         // Manejo de errores en la conexión
         if ($this->conn->connect_error) {
