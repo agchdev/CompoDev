@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Nav from './Nav'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import InicioRegLog from './InicioRegLog';
 
 const Header = () => {
 
@@ -33,11 +34,12 @@ const Header = () => {
   }, [navigate]);
 
   return (
-    <header className='absolute flex w-[100%] items-center justify-between px-4 pt-8 pb-[100px] z-100 bg-gradient-to-b from-zinc-900 to-slate-900/0'>
-      <div className='flex items-center justify-center font-bold text-white inline-block text-transparent bg-clip-text text-2xl font-roboto'>
+    <header className='absolute w-full m-auto flex flex-col lg:flex-row items-center justify-between px-4 pt-8 pb-[100px] z-100 bg-gradient-to-b from-zinc-900 to-slate-900/0 '>
+      <div className='absolute w-full m-auto top-10 flex lg:hidden items-center justify-center font-bold text-white text-5xl font-roboto transition-all'>
         <p className='mb-[5px]'>compoDev</p>
       </div>
-      <Nav res={res}/>
+      <Nav />
+      <InicioRegLog res={res}/>
     </header>
   )
 }
