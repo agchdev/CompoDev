@@ -23,10 +23,10 @@ function App() {
             <Route index element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path='/ide' element={<Ide />} />
+            <Route path='/ide/:id' element={<Ide />} />
             <Route path='/crearProyecto' element={<CrearProyecto />} />
             <Route path='/search' element={<Buscador />} />
-            <Route path='/profile' element={<Perfil />} />
+            <Route path='/profile/:id' element={<Perfil />} />
           </Route>
         </Routes>
       </BrowserRouter>

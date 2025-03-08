@@ -29,7 +29,7 @@ $conn = $db->getConn();
 $consulta = "SELECT *
             FROM proyectos p, proyectos_usuarios pu, usuarios u
             WHERE u.id = pu.id_usuario 
-              AND p.id = pu.id_proyecto
+              AND p.id_project = pu.id_proyecto
               AND user = ?";
 $sentencia = $conn->prepare($consulta);
 $sentencia->bind_param("s", $usuario);

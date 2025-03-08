@@ -1,7 +1,7 @@
 
 const AjustesProfile = () => {
   return (
-    <div className="text-white hidden lg:flex lg:row-span-full border rounded-3xl">
+    <div className="text-white hidden xl:flex lg:row-span-full rounded-3xl bg-[#202020]">
       AjustesProfile
     </div>
   )

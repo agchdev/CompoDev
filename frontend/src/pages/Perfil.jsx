@@ -33,7 +33,7 @@ const Perfil = () => {
 
     return (
         <>
-            <div className="w-full h-screen grid grid-cols-6 grid-rows-6 gap-4">
+            <div className="w-full h-screen grid grid-cols-6 grid-rows-6 gap-4 pt-30">
                 <AjustesProfile res={res} />
                 <BannerProfile res={res} />
                 <ProyectosDelPerfil res={res} />

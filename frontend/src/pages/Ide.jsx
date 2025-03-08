@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { javascript } from "@codemirror/lang-javascript";
 import { html } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
@@ -6,8 +6,12 @@ import { useCallback } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import Result from '../components/ide/Result';
 import './Ide.css'
+import { useParams } from 'react-router-dom';
 
 const Ide = () => {
+    // Obtenemos el parámetro id de la URL: /ide/:id
+    const { id } = useParams();
+
     // Se crean los useStates que reciben el codigo
     const [html_edit, setHtml_Edit] = useState('');
     const [css_edit, setCss_Edit] = useState('');

@@ -20,7 +20,7 @@ const BannerProfile = ({ res }) => {
   }
 
   return (
-    <div className="text-white col-span-6 lg:col-span-5 row-span-2 border rounded-3xl overflow-hidden relative">
+    <div className="text-white col-span-6 xl:col-span-5 row-span-2 bg-[#202020] rounded-3xl overflow-hidden relative">
       <div className="absolute w-full h-[60%] bg-red-300">
 
       </div>

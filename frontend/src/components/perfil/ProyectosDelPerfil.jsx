@@ -4,7 +4,7 @@ import OverlayProyecto from "./OverlayProyecto"
 
 const ProyectosDelPerfil = () => {
 
-  const [res, setRes] = useState()
+  const [res, setRes] = useState([])
 
   useEffect(() => {
     const extraerDatosPerfil = async () => {
@@ -30,10 +30,12 @@ const ProyectosDelPerfil = () => {
   console.log(res)
 
   return (
-    <div className="text-white col-span-6 lg:col-span-5 row-span-4 border rounded-3xl">
-      {res.map(post => {
-        <OverlayProyecto post={post}/>
-      })}
+    <div className="text-white col-span-6 xl:col-span-5 row-span-4 rounded-3xl bg-[#202020]">
+      <div className="flex gap-5 flex-wrap">
+        {res.map(post => (
+          <OverlayProyecto key={post} post={post}/>
+        ))}
+      </div>
     </div>
   )
 }
