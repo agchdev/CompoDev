@@ -14,7 +14,7 @@ const Plantilla = ({logeado}) => {
   return (
     <>
     {noMostrar.includes(location.pathname) ? null : <Header />}
-      <main className='bg-black w-full h-screen'>
+      <main className='bg-black w-full'>
         <Outlet logeado={logeado}/>
       </main>
     {noMostrar.includes(location.pathname) ? null : <Footer />}
