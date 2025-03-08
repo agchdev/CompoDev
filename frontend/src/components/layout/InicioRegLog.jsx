@@ -55,7 +55,7 @@ const InicioRegLog = ({ res }) => {
                     </nav> : <nav className='absolute hidden md:flex right-5 top-5'>
                         <div className='flex text-white font-bold items-end gap-3 '>
                             <p>Hola, {res.usuario[0].user}!</p>
-                            <Link to="/profile" className='w-[80px] h-[80px] overflow-hidden rounded-full'>
+                            <Link to={"/profile/"+res.usuario[0].user} className='w-[80px] h-[80px] overflow-hidden rounded-full'>
                                 <img className='w-full h-full object-cover' src={urlFoto} alt="" />
                             </Link>
                         </div>
