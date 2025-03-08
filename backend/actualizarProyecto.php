@@ -5,7 +5,6 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
-
 require_once(__DIR__ . "/class.db.php");
 
 session_start();
@@ -25,16 +24,20 @@ if (!isset($_POST["html_edit"]) || !isset($_POST["css_edit"]) || !isset($_POST["
 $html = trim($_POST["html_edit"]);
 $css = trim($_POST["css_edit"]);
 $js = trim($_POST["js_edit"]);
-$id_project = trim($_POST["id"]);
+$mini = trim($_POST["mini"]);
+$id_project = (int) $_POST["id"]; 
 
 $db = new DB();
 $conn = $db->getConn();
 
-$consulta = "UPDATE proyectos 
-            SET html = ? AND css = ? AND js = ? 
+$consulta = "UPDATE proyectos
+            SET html = ?,
+                css = ?,
+                js  = ?,
+                miniatura = ?
             WHERE id_project = ?";
 $sentencia = $conn->prepare($consulta);
-$sentencia->bind_param("sssi", $html, $css, $js, $id);
+$sentencia->bind_param("ssssi", $html, $css, $js, $mini, $id_project);
 if($sentencia->execute()){
     echo json_encode(["status" => "succes", "message" => "Cambios realizados con exito!"]);
     exit;
