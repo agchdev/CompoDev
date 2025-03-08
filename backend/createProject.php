@@ -19,7 +19,7 @@ $db = new DB();
 $conn = $db->getConn();
 
 // Verificar si el usuario o email ya existen
-$consulta = "SELECT id FROM proyectos WHERE titulo = ? AND descripcion = ? AND categoria = ?";
+$consulta = "SELECT id FROM proyectos WHERE titulo = ? AND descripcion_proyecto = ? AND categoria = ?";
 $sentencia = $conn->prepare($consulta);
 $sentencia->bind_param("sss", $titulo, $categoria, $descripcion);
 $sentencia->execute();
@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
 }
 $sentencia->close();
 
-$consulta = "INSERT INTO proyectos (titulo, descripcion, categoria) VALUES (?,?,?)";
+$consulta = "INSERT INTO proyectos (titulo, descripcion_proyecto, categoria) VALUES (?,?,?)";
 $sentencia = $conn->prepare($consulta);
 $sentencia->bind_param("sss", $titulo, $descripcion, $categoria);
 $sentencia->execute();
@@ -50,7 +50,7 @@ $sentencia->bind_result($idUsu);
 $sentencia->fetch();
 $sentencia->close();
 
-$consulta = "SELECT id FROM proyectos WHERE titulo = ? AND descripcion = ? AND categoria = ?";
+$consulta = "SELECT id FROM proyectos WHERE titulo = ? AND descripcion_proyecto = ? AND categoria = ?";
 $sentencia = $conn->prepare($consulta);
 $sentencia->bind_param("sss", $titulo, $descripcion, $categoria);
 $sentencia->execute();
