@@ -1,18 +1,61 @@
+import axios from "axios"
 import { useRef, useState } from "react"
 import { Link } from "react-router-dom"
 
 
 const Buscador = () => {
 
-  const [isOpen, setIsOpen] = useState(false)
   const [lupaOpen, setLupaOpen] = useState(false)
   const [buscando, setBuscando] = useState("")
+  const [cat, setCat] = useState('');
+  const [extra, setExtra] = useState('');
 
+  const categorias = ["Botones", "Deslizador", "Fondos", "Formularios", "Landing", "Otro"]
+
+  const divBtn = useRef()
   const busca = useRef(null)
   const divCosas = useRef(null)
   const muchosLinks = useRef(null)
   const inpText = useRef(null)
   const inpBusca = useRef(null)
+  const btnEx = useRef(null)
+  const btnEx1 = useRef(null)
+
+  const buscar = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("busqueda", buscando);
+    formData.append("cat", cat);
+    formData.append("extra", extra);
+
+    try {
+      const response = await axios.post(
+        "http://localhost/CompoDev/backend/busqueda.php",
+        formData,
+      )
+
+      console.log("respuesta del servidor: ", response.data);
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
+  }
+
+
+  const selectCategoria = (e) => {
+    e.preventDefault();
+
+    // Convertimos HTMLCollection a un array para poder usar forEach
+    Array.from(divBtn.current.children).forEach(btn => {
+      if (btn.textContent !== e.target.textContent) {
+        btn.classList.remove("bg-gradient-to-r", "from-emerald-500", "via-emerald-600", "to-emerald-500");
+        btn.classList.add("bg-[#252525]");
+      } else {
+        btn.classList.remove("bg-gray-700");
+        btn.classList.add("bg-gradient-to-r", "from-emerald-500", "via-emerald-600", "to-emerald-500");
+      }
+    });
+  };
 
   const abreBuscador = () => {
     setLupaOpen(!lupaOpen)
@@ -58,29 +101,51 @@ const Buscador = () => {
           <button
             className='rounded-full bg-[#1d1d1d] py-2 px-5 cursor-pointer hover:bg-black/70'
             ref={inpBusca}
-            type="submit"
+            onClick={(e) => buscar(e)}
           ><img src="./public/uploads/send.svg" alt="" /></button>
         </Link>
-        <div className="relative flex z-201 gap-5">
-          <div>
+        <div className="relative flex lg:flex-row flex-col-reverse justify-center items-center z-201 gap-5">
+          <div className="flex gap-2">
             <button
-              className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto]">
+              className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto] cursor-pointer"
+              ref={btnEx}
+              onClick={() => {
+                setExtra('reciente')
+                btnEx.current.classList.add("bg-gradient-to-r", "from-emerald-500", "via-emerald-600", "to-emerald-500")
+                btnEx.current.classList.remove("bg-[#252525]")
+                btnEx1.current.classList.add("bg-[#252525]")
+                btnEx1.current.classList.remove("bg-gradient-to-r", "from-emerald-500", "via-emerald-600", "to-emerald-500")
+              }}
+            >
               <img src="./public/uploads/recent.svg" alt="" />
             </button>
             <button
-              className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto]">
+              className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto] cursor-pointer"
+              ref={btnEx1}
+              onClick={() => {
+                setExtra('liked')
+                btnEx1.current.classList.add("bg-gradient-to-r", "from-emerald-500", "via-emerald-600", "to-emerald-500")
+                btnEx1.current.classList.remove("bg-[#252525]")
+                btnEx.current.classList.add("bg-[#252525]")
+                btnEx.current.classList.remove("bg-gradient-to-r", "from-emerald-500", "via-emerald-600", "to-emerald-500")
+              }}
+            >
               <img src="./public/uploads/liked.svg" alt="" />
             </button>
           </div>
-          <div className="flex gap-2">
-            <button
-              className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto]">
-              Botones
-            </button>
-            <button
-              className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto]">
-              Deslizador
-            </button>
+          <div ref={divBtn} className="flex flex-wrap lg:flex-nowrap w-[80%] justify-center gap-2">
+            {categorias.map(categ => (
+              <button
+                key={categ}
+                className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto] cursor-pointer"
+                onClick={(e) => {
+                  selectCategoria(e)
+                  setCat(e.target.textContent)
+                  e.preventDefault()
+                  e.target.classList.add("bg-gradient-to-r", "from-emerald-500", "via-emerald-600", "to-emerald-500")
+                }}
+              >{categ}</button>
+            ))}
           </div>
         </div>
       </div>

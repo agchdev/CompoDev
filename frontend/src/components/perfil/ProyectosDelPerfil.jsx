@@ -14,10 +14,10 @@ const ProyectosDelPerfil = () => {
           {},
           {
             withCredentials: true
-          }
+          } 
         );
-        console.log("Respuesta del servidor:", response.data);
-        setRes(response.data)
+        console.log("Respuesta del servidor:", response.data.success[0]);
+        setRes(response.data.success[0])
       } catch (error) {
         console.error("Error en la solicitud:", error);
       }
