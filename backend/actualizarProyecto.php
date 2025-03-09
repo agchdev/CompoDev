@@ -24,7 +24,6 @@ if (!isset($_POST["html_edit"]) || !isset($_POST["css_edit"]) || !isset($_POST["
 $html = trim($_POST["html_edit"]);
 $css = trim($_POST["css_edit"]);
 $js = trim($_POST["js_edit"]);
-$mini = trim($_POST["mini"]);
 $id_project = (int) $_POST["id"]; 
 
 $db = new DB();
@@ -33,11 +32,10 @@ $conn = $db->getConn();
 $consulta = "UPDATE proyectos
             SET html = ?,
                 css = ?,
-                js  = ?,
-                miniatura = ?
+                js  = ?
             WHERE id_project = ?";
 $sentencia = $conn->prepare($consulta);
-$sentencia->bind_param("ssssi", $html, $css, $js, $mini, $id_project);
+$sentencia->bind_param("sssi", $html, $css, $js, $id_project);
 if($sentencia->execute()){
     echo json_encode(["status" => "succes", "message" => "Cambios realizados con exito!"]);
     exit;
@@ -50,5 +48,3 @@ if($sentencia->execute()){
 $sentencia->close();
 $conn->close();
 ?>
-
-

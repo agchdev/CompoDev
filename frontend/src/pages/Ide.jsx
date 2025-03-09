@@ -1,28 +1,17 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import html2canvas from 'html2canvas';
 import CodeMirror from '@uiw/react-codemirror';
 import Result from '../components/ide/Result'; 
 import { javascript } from '@codemirror/lang-javascript';
 import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
+import './Ide.css'
 
 /** Componente que muestra la vista previa directamente en un <div>
  *  con dangerouslySetInnerHTML, en lugar de un iframe.
  */
-function Resultado({ srcCode }) {
-  return (
-    <div id="result-preview" className="bg-gray-900 p-4 shadow mt-4 rounded-lg">
-      <h2 className="text-lg font-semibold mb-2 text-white">Result</h2>
-      {/* Mostramos el resultado embebido para que html2canvas pueda capturarlo */}
-      <div
-        className="w-full min-h-[300px] bg-white border border-gray-700 rounded-md p-3"
-        dangerouslySetInnerHTML={{ __html: srcCode }}
-      />
-    </div>
-  );
-}
+
 
 const Ide = () => {
   // Parámetro de la URL (ruta /ide/:id)
@@ -32,7 +21,6 @@ const Ide = () => {
   const [html_edit, setHtml_Edit] = useState('');
   const [css_edit, setCss_Edit]   = useState('');
   const [js_edit, setJs_Edit]     = useState('');
-  const [mini, setMini]     = useState('');
 
   // Cargar el proyecto desde el backend
   useEffect(() => {
@@ -75,46 +63,13 @@ const Ide = () => {
 
   // Función para actualizar proyecto en BD
   const subirBD = async () => {
-    try {
-        // Reemplazamos 'oklch(...)' ...
-        const styles = document.querySelectorAll('style, link[rel="stylesheet"]');
-        styles.forEach((styleEl) => {
-          if (styleEl.innerHTML) {
-            styleEl.innerHTML = styleEl.innerHTML.replace(/oklch\(.*?\)/g, '#000');
-          }
-        });
-      
-        const elemento = document.getElementById('result-preview');
-        if (!elemento) return;
-      
-        const canvas = await html2canvas(elemento);
-        const dataURL = canvas.toDataURL('image/png');
-      
-        // En vez de { id, screenshot: dataURL }, usamos FormData:
-        const formData = new FormData();
-        formData.append('id', id);
-        formData.append('screenshot', dataURL);
-      
-        const response = await axios.post(
-          'http://localhost/CompoDev/backend/subirMiniatura.php',
-          formData,                // <-- Enviamos FormData
-          { withCredentials: true }
-        );
-      
-        console.log('Miniatura guardada en el backend:', response.data);
-        setMini(response.data.file)
-      
-      } catch (error) {
-        console.error('Error al generar la miniatura:', error);
-      }
-      
+    
     try {
       const formData = new FormData();
       formData.append('id', id);
       formData.append('html_edit', html_edit);
       formData.append('css_edit', css_edit);
       formData.append('js_edit', js_edit);
-      formData.append('mini', mini);
 
       const response = await axios.post(
         'http://localhost/CompoDev/backend/actualizarProyecto.php',
@@ -129,7 +84,7 @@ const Ide = () => {
   };
 
   return (
-    <div className="p-2 text-white">
+    <div className="p-2 text-white pt-18">
       {/* Editores */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 mb-4">
         {/* HTML Editor */}
@@ -173,13 +128,12 @@ const Ide = () => {
       </div>
 
       {/* Vista previa */}
-      <Resultado srcCode={srcCode} />
       <Result srcCode={srcCode} />
       {/* Botones */}
-      <div className="flex gap-3 mt-4">
+      <div className="flex justify-center mt-5">
         <button
           onClick={subirBD}
-          className="px-3 py-2 bg-white text-black rounded cursor-pointer z-100"
+          className="shiny-cta"
         >
           Guardar Cambios
         </button>
