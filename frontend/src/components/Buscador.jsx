@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useRef, useState } from "react"
 import { Link } from "react-router-dom"
+import OverlayProyecto from "./perfil/OverlayProyecto"
 
 
 const Buscador = () => {
@@ -9,6 +10,7 @@ const Buscador = () => {
   const [buscando, setBuscando] = useState("")
   const [cat, setCat] = useState('');
   const [extra, setExtra] = useState('');
+  const [res, setRes] = useState([]);
 
   const categorias = ["Botones", "Deslizador", "Fondos", "Formularios", "Landing", "Otro"]
 
@@ -36,6 +38,7 @@ const Buscador = () => {
       )
 
       console.log("respuesta del servidor: ", response.data);
+      setRes(response.data);
     } catch (error) {
       console.error("Error en la solicitud:", error);
     }
@@ -73,8 +76,8 @@ const Buscador = () => {
       inpText.current.classList.add("hidden")
       inpBusca.current.classList.add("hidden")
     }
-
   }
+
   return (
     <>
       <div className="absolute flex justify-center items-center flex-col w-full m-auto top-40 lg:top-27 transition-all gap-4">
@@ -104,13 +107,14 @@ const Buscador = () => {
             onClick={(e) => buscar(e)}
           ><img src="./public/uploads/send.svg" alt="" /></button>
         </Link>
-        <div className="relative flex lg:flex-row flex-col-reverse justify-center items-center z-201 gap-5">
+        <div className="relative flex lg:flex-row flex-col-reverse justify-center items-center z-201 gap-0 lg:gap-10">
           <div className="flex gap-2">
             <button
               className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto] cursor-pointer"
               ref={btnEx}
               onClick={() => {
                 setExtra('reciente')
+                console.log(extra)
                 btnEx.current.classList.add("bg-gradient-to-r", "from-emerald-500", "via-emerald-600", "to-emerald-500")
                 btnEx.current.classList.remove("bg-[#252525]")
                 btnEx1.current.classList.add("bg-[#252525]")
@@ -124,6 +128,7 @@ const Buscador = () => {
               ref={btnEx1}
               onClick={() => {
                 setExtra('liked')
+                console.log(extra)
                 btnEx1.current.classList.add("bg-gradient-to-r", "from-emerald-500", "via-emerald-600", "to-emerald-500")
                 btnEx1.current.classList.remove("bg-[#252525]")
                 btnEx.current.classList.add("bg-[#252525]")
@@ -149,8 +154,14 @@ const Buscador = () => {
           </div>
         </div>
       </div>
-      <div className='absolute bg-gradient-to-tl from-black via-black/95 to-indigo-600/0 w-full h-screen'></div>
+      <div className='absolute bg-gradient-to-tl from-black via-black/95 to-indigo-600/0 w-full'>
       <div className="min-h-screen bg-black flex justify-center items-center [background-image:linear-gradient(#333_1px,transparent_1px),linear-gradient(90deg,#333_1px,transparent_1px)] [background-size:50px_50px]">
+        <div className="relative w-full flex flex-wrap justify-center mt-130 lg:mt-70 gap-4">
+          {res.map(post => (
+            <OverlayProyecto key={post} post={post}/>
+          ))}
+        </div>
+      </div>
       </div>
     </>
   )

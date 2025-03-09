@@ -11,9 +11,12 @@ header("Content-Type: application/json");
 // Incluir tu clase de conexión DB
 require_once(__DIR__ . "/class.db.php");
 
-$busqueda = trim($_POST["busqueda"]) || "";
-$cat = trim($_POST["cat"]) || "";
-$extra = trim($_POST["extra"]) || "";
+$busqueda = trim($_POST["busqueda"]);
+$cat = trim($_POST["cat"]);
+$extra = trim($_POST["extra"]);
+
+// echo "cat => ".$cat;
+// echo "extra => ".$extra;
 
 $db = new DB();
 $conn = $db->getConn();
@@ -31,17 +34,12 @@ if($extra == ""){
                                     FROM proyectos 
                                     WHERE titulo LIKE ? AND categoria LIKE ? 
                                     ORDER BY likes ASC";
-    if($extra == "reciente" && $extra == "liked") $consulta = "SELECT * 
-                                                            FROM proyectos 
-                                                            WHERE titulo LIKE ? AND categoria LIKE ? 
-                                                            ORDER BY fecha_subido ASC, likes ASC";
 }
 $sentencia = $conn->prepare($consulta);
 $inp = "%".$busqueda."%";
 $cate = "%".$cat."%";
 $sentencia->bind_param("ss", $inp, $cate);
 $sentencia->execute();
-
 // Obtenemos los resultados
 $resultado = $sentencia->get_result();
 
