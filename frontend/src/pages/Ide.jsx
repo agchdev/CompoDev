@@ -21,6 +21,7 @@ const Ide = () => {
   const [html_edit, setHtml_Edit] = useState('');
   const [css_edit, setCss_Edit]   = useState('');
   const [js_edit, setJs_Edit]     = useState('');
+  const [popUp, setPopUp]         = useState(false);
 
   // Cargar el proyecto desde el backend
   useEffect(() => {
@@ -78,18 +79,31 @@ const Ide = () => {
       );
 
       console.log('Respuesta al guardar cambios:', response.data);
+
+      if(response.data.status === "succes") setPopUp(true)
     } catch (error) {
       console.error('Error al guardar cambios:', error);
     }
   };
 
   return (
-    <div className="p-2 text-white pt-18">
+    <>
+    {
+        popUp ? <div 
+            className='sticky w-full top-[10%] z-100'
+            onClick={() => setPopUp(false)}
+        >
+            <div className='text-black text-center p-5 w-[50%] bg-white mx-auto rounded popup'>
+                <p className='font-bold'>Cambios guardados con éxito! 😎</p>
+            </div>
+        </div> : null
+    }
+    <div className="p-2 text-white pt-18 bg-black">
       {/* Editores */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 mb-4">
         {/* HTML Editor */}
-        <div className="bg-gradient-to-r from-orange-500 to-red-500 p-4 rounded-lg shadow">
-          <h2 className="text-lg font-semibold mb-2 text-white">HTML</h2>
+        <div className="bg-gradient-to-r from-orange-500 to-red-500 p-1 rounded-lg shadow">
+          <h2 className="text-lg font-semibold mb-1 text-white">HTML</h2>
           <CodeMirror
             className="text-xl border-gray-700 border"
             value={html_edit}
@@ -101,8 +115,8 @@ const Ide = () => {
         </div>
         
         {/* CSS Editor */}
-        <div className="bg-gradient-to-r from-cyan-500 to-blue-500 p-4 rounded-lg shadow">
-          <h2 className="text-lg font-semibold mb-2 text-white">CSS</h2>
+        <div className="bg-gradient-to-r from-cyan-500 to-blue-500 p-1 rounded-lg shadow">
+          <h2 className="text-lg font-semibold mb-1 text-white">CSS</h2>
           <CodeMirror
             className="text-xl border-gray-700 border"
             value={css_edit}
@@ -114,8 +128,8 @@ const Ide = () => {
         </div>
         
         {/* JS Editor */}
-        <div className="bg-gradient-to-r from-amber-300 to-yellow-400 p-4 rounded-lg shadow">
-          <h2 className="text-lg font-semibold mb-2 text-white">JavaScript</h2>
+        <div className="bg-gradient-to-r from-amber-300 to-yellow-400 p-1 rounded-lg shadow">
+          <h2 className="text-lg font-semibold mb-1 text-white">JavaScript</h2>
           <CodeMirror
             className="text-xl border-gray-700 border"
             value={js_edit}
@@ -139,6 +153,7 @@ const Ide = () => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 

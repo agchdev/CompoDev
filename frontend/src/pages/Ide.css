@@ -202,3 +202,19 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
 }
+
+.popup{
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.718);
+    animation: 1s init linear none;
+}
+
+@keyframes init {
+    0% {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
