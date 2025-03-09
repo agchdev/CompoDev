@@ -9,7 +9,7 @@ const Plantilla = ({logeado}) => {
   const location = useLocation();
 
   // Rutas en las que NO quieres mostrar el Header ni el Footer
-  const noMostrar = ['/login', '/register', '/ide', '/profile'];
+  const noMostrar = ['/login', '/register', '/ide', '/profile', '/res'];
 
   return (
     <>
