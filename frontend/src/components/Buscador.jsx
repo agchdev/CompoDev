@@ -23,30 +23,31 @@ const Buscador = () => {
       inpText.current.classList.remove("hidden")
       inpBusca.current.classList.remove("hidden")
       inpText.current.focus()
-    }else{
+    } else {
       busca.current.classList.remove("w-[70%]", "m-auto", "py-1")
       divCosas.current.classList.remove("flex-col")
       muchosLinks.current.classList.remove("m-auto")
       inpText.current.classList.add("hidden")
       inpBusca.current.classList.add("hidden")
     }
-    
-  } 
+
+  }
   return (
     <>
-      <Link 
-          className='mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center'
+      <div className="absolute flex justify-center items-center flex-col w-full m-auto top-40 lg:top-27 transition-all gap-4">
+        <Link
+          className='mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center relative z-200 w-[80%]'
           to="/search"
           ref={busca}
         >
           <img
             className='transition-all'
-            src="../../../public/uploads/lupa.svg" alt="lupa" 
+            src="./public/uploads/lupa.svg" alt="lupa"
             onClick={abreBuscador}
           />
-          <input 
-            ref={inpText} 
-            className='w-full bg-black/70 rounded-3xl hidden text-white transition-all px-3 py-1.5' 
+          <input
+            ref={inpText}
+            className='w-full bg-black/70 rounded-3xl text-white transition-all px-3 py-1.5'
             type="text"
             value={buscando}
             onChange={(e) => {
@@ -54,12 +55,35 @@ const Buscador = () => {
               console.log(buscando)
             }}
           />
-          <input 
-            className='hidden rounded-full bg-[#1d1d1d] py-2 px-5 cursor-pointer hover:bg-black/70'
-            ref={inpBusca} 
+          <button
+            className='rounded-full bg-[#1d1d1d] py-2 px-5 cursor-pointer hover:bg-black/70'
+            ref={inpBusca}
             type="submit"
-          />
+          ><img src="./public/uploads/send.svg" alt="" /></button>
         </Link>
+        <div className="relative flex z-201 gap-5">
+          <div>
+            <button
+              className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto]">
+              <img src="./public/uploads/recent.svg" alt="" />
+            </button>
+            <button
+              className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto]">
+              <img src="./public/uploads/liked.svg" alt="" />
+            </button>
+          </div>
+          <div className="flex gap-2">
+            <button
+              className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto]">
+              Botones
+            </button>
+            <button
+              className="mt-6 lg:my-auto bg-[#252525] border-1 border-[#3a3a3a] text-gray-100 rounded-3xl py-2 px-3 flex gap-6 shadow-md transition-all items-center justify-center z-200 w-[auto]">
+              Deslizador
+            </button>
+          </div>
+        </div>
+      </div>
       <div className='absolute bg-gradient-to-tl from-black via-black/95 to-indigo-600/0 w-full h-screen'></div>
       <div className="min-h-screen bg-black flex justify-center items-center [background-image:linear-gradient(#333_1px,transparent_1px),linear-gradient(90deg,#333_1px,transparent_1px)] [background-size:50px_50px]">
       </div>

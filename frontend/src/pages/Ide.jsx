@@ -78,7 +78,7 @@ const Ide = () => {
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         // Usamos lo que el usuario escribe en 'text'
-        const prompt =  instrucciones+" "+text;
+        const prompt =  instrucciones+" "+text+". Si quiere hacer cambios sobre lo anterior aquí te dejo la respuesta que diste antes, si no hay nada es que es la primera consulta: "+res;
         console.log(prompt)
 
         // Generamos el contenido
@@ -87,11 +87,8 @@ const Ide = () => {
         // Si result.response.text() es una Promise, necesitamos await
         const responseText = await result.response.text();
         setRes(responseText);
-        console.log(responseText)
         console.log(JSON.parse(responseText));
         const codeJson = JSON.parse(responseText)
-        console.log(codeJson.html)
-        console.log(codeJson.css)
         setHtml_Edit(codeJson.html)
         setCss_Edit(codeJson.css)
         setJs_Edit(codeJson.js)

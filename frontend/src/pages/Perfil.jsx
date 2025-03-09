@@ -33,7 +33,10 @@ const Perfil = () => {
 
     return (
         <>
-            <div className="w-full grid grid-cols-6 grid-rows-6 gap-4 pt-30">
+            <div 
+                className="w-full grid grid-cols-6 grid-rows-6 gap-4 pt-30"
+                style={{ gridTemplateRows: "200px 200px auto auto auto auto auto" }}
+            >
                 <AjustesProfile res={res} />
                 <BannerProfile res={res} />
                 <ProyectosDelPerfil res={res} />
